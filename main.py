@@ -33,3 +33,13 @@ async def fast_consumption():
 @app.get("/cargar_tabla", response_class=HTMLResponse)
 def cargar_tabla(request: Request):
     return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request})
+
+
+@app.post("/tablita", response_class=HTMLResponse)
+def carga_tablita(request: Request):
+    return templates.TemplateResponse(conteo_rapido + "colores.html", {"request": request})
+
+
+@app.post("/tablita2", response_class=HTMLResponse)
+def carga_tablita2(request: Request):
+    return templates.TemplateResponse(conteo_rapido + "colores2.html", {"request": request})

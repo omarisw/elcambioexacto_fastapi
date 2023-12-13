@@ -79,8 +79,10 @@
               <label class="ui teal ribbon label">Mi conteo</label>
               <h5 style="color: #00B4AC;">Conteo Rápido Libre</h5>
               <div class="ui container custom-grid">
-                <a class="ui big teal label">Lácteos</a>
-                <a class="ui big green label">Verduras</a>
+                <a class="ui big teal label" hx-post="/tablita" hx-trigger="click"
+                  hx-target="#tabla_colores">Lácteos</a>
+                <a class="ui big green label" hx-post="/tablita2" hx-trigger="click"
+                  hx-target="#tabla_colores">Verduras</a>
                 <a class="ui big red label">Frutas</a>
                 <a class="ui big orange label">Granos y Cereales</a>
                 <a class="ui big purple label">Carnes</a>
@@ -119,9 +121,11 @@
                 </div>
                 </form>
               </div>
+              <!-- Renderización de tabla_plan_de_alimentos -->
+              <div class="row">
+                <div id="tabla_colores"></div>
+              </div>
             </div>
-
-
 
             <!-- POR PORCIONES -->
             <div class="row" id="plan_consumption_portions_div" name="plan_consumption_div" style="display: none;">
@@ -383,6 +387,10 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/css/perfect-scrollbar.min.css"
     as="style" onload="this.onload=null;this.rel='stylesheet'">
   <!-- SCRIPTS -->
+  <!-- Incluye el script de htmx -->
+  <script src="https://unpkg.com/htmx.org@1.9.9"
+    integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+    crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
     integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
