@@ -1,3 +1,4 @@
+<!-- colores.html -->
 <table>
   <thead>
     <tr>
@@ -6,18 +7,11 @@
     </tr>
   </thead>
   <tbody>
+    {% for color in colores %}
     <tr>
       <td style="background-color: teal;"></td>
-      <td>Lácteos</td>
+      <td>{{ color.nombre }}</td>
     </tr>
-    <tr>
-      <td style="background-color: green;"></td>
-      <td>Verduras</td>
-    </tr>
-    <tr>
-      <td style="background-color: red;"></td>
-      <td>Frutas</td>
-    </tr>
-    <!-- Agrega más filas según sea necesario -->
+    {% endfor %}
   </tbody>
 </table>
