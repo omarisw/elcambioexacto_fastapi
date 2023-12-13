@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- <link rel="icon" href="img/icon1_3_mini.ico" type="image/x-icon"> -->
+  <title>Mi conteo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+    integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .custom-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .custom-grid .label {
+      flex-basis: calc(33.333% - 10px);
+      /* Calcula el ancho para tres elementos por fila con espacio entre ellos */
+      margin-bottom: 10px;
+      /* Ajusta el espacio entre filas */
+    }
+  </style>
+  <!-- Prefetch de DNS para recurso externo -->
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com/">
+</head>
+
+<body>
+  <!-- BARRA SUPERIOR -->
+  <div class="ui container mt15">
+    <div class="ui fixed teal inverted menu">
+      <a class="item" onclick="$('.ui.sidebar').sidebar('toggle');">
+        <img src="img/icon1_3_mini.webp" width="35" height="39" /> Menú
+      </a>
+    </div>
+  </div>
+
+  <div class="ui thin left demo vertical sidebar labeled icon menu">
+    <div class="ui center aligned header" id="main_toolbar_fullname_patient_div"></div>
+    <a href="/patient_info">
+      <div class="ui aligned image">
+        <img class="ui circular almost-tiny image" width="96" height="96" id="main_toolbar_image_img"
+          alt="Descripción de la imagen">
+      </div>
+    </a>
+
+    <br />
+    <a class="item" href="/start"><i class="home icon"></i> Inicio</a>
+    <a class="item" href="/plan_consumption"><i class="utensils icon"></i>Mi conteo</a>
+    <a class="item" href="/plan_previous_days"><i class="th list icon"></i> Mis logros</a>
+    <a class="item" href="/plan_consumed_log"><i class="book icon"></i> Bitácora de comida</a>
+    <a class="item" href="/plan_corrections"><i class="edit icon"></i> Correcciones</a>
+    <a class="item" href="/plan_notifications"><i class="calendar icon"></i> Notificaciones</a>
+    <a class="item" href="/plan_info"><i class="info icon"></i> Resumen de plan</a>
+    <a class="item" href="/patient_notes"><i class="sticky note outline icon"></i> Notas</a>
+    <a class="item" href="/extra_points_count"><i class="list ol icon"></i> Conteo de puntos extra</a>
+    <a class="item" href="/favorites"><i class="star icon"></i> Favoritos</a>
+    <a class="item" href="/equivalences"><i class="exchange icon"></i> Equivalencias</a>
+    <a class="item" href="/recommendations"><i class="check square outline icon"></i> Tips Nutritivos</a>
+    <a class="item" href="/food_with_salt"><i class="list icon"></i> Alimentos con sal</a>
+    <a class="item" href="/pregnant_list"><i class="list ul icon"></i> Lista de embarazo</a>
+    <a class="item" href="/" id="logoutLink">
+      <i class="lock icon"></i> Cerrar sesión
+    </a>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="pusher">
+    <div class="ui main container">
+      <div class="ui grid">
+        <div class="row">
+          <div class="sixteen wide column">
+            <div class="ui segment" style="margin-top: 10vh">
+              <label class="ui teal ribbon label">Mi conteo</label>
+              <h5 style="color: #00B4AC;">Conteo Rápido Libre</h5>
+              <div class="ui container custom-grid">
+                <a class="ui big teal label">Lácteos</a>
+                <a class="ui big green label">Verduras</a>
+                <a class="ui big red label">Frutas</a>
+                <a class="ui big orange label">Granos y Cereales</a>
+                <a class="ui big purple label">Carnes</a>
+                <a class="ui big yellow label">Grasas</a>
+                <a class="ui big brown label">Libres</a>
+                <a class="ui big grey label">Agua</a>
+                <a class="ui big black label">Puntos extras</a>
+              </div>
+              <!-- MARCA DE SI SE HIZO, O NO, EJERCICIO -->
+              <div class="row">
+                <br />
+                <div class="sixteen wide column">
+                  <form class="ui form" id="plan_consumption_exercise_frm">
+                    <!-- ID PATIENT -->
+                    <input type="hidden" id="plan_consumption_exercise_id_patient_txt"
+                      name="plan_consumption_exercise_id_patient_txt" />
+
+                    <!-- ID PLAN -->
+                    <input type="hidden" id="plan_consumption_exercise_id_plan_txt"
+                      name="plan_consumption_exercise_id_plan_txt" />
+
+                    <!-- FECHA -->
+                    <input type="hidden" id="plan_consumption_exercise_date_txt"
+                      name="plan_consumption_exercise_date_txt" />
+
+                </div>
+                <div class="field">
+                  <label>Hoy he hecho ejercicio</label>
+                  <div class="ui big input">
+                    <select id="plan_consumption_exercise_sel">
+                      <option value="0">No</option>
+                      <option value="1">Sí</option>
+                    </select>
+                    <input type="hidden" id="plan_consumption_exercise_txt" name="plan_consumption_exercise_txt" />
+                  </div>
+                </div>
+                </form>
+              </div>
+            </div>
+
+
+
+            <!-- POR PORCIONES -->
+            <div class="row" id="plan_consumption_portions_div" name="plan_consumption_div" style="display: none;">
+              <br />
+              <div class="sixteen wide column">
+                <form class="ui form" id="plan_consumption_portions_frm">
+                  <!-- ID PATIENT -->
+                  <input type="hidden" id="plan_consumption_portion_id_patient_txt"
+                    name="plan_consumption_portion_id_patient_txt" />
+
+                  <!-- ID PLAN -->
+                  <input type="hidden" id="plan_consumption_portion_id_plan_txt"
+                    name="plan_consumption_portion_id_plan_txt" />
+
+                  <!-- FECHA -->
+                  <input type="hidden" id="plan_consumption_portion_date_txt"
+                    name="plan_consumption_portion_date_txt" />
+
+                  <!-- HORA -->
+                  <input type="hidden" id="plan_consumption_portion_time_txt"
+                    name="plan_consumption_portion_time_txt" />
+
+                  <!-- PORCION -->
+                  <div class="field">
+                    <label>Alimento</label>
+
+                    <div class="ui grid">
+                      <div class="row">
+                        <div class="eight wide column">
+                          <button type="button" id="buttonCategoriesAll" class="big ui teal button" tabindex="0"><i
+                              class="utensils icon"></i>Seleccionar</button>
+                        </div>
+                        <div class="eight wide column">
+                          <button type="button" id="buttonSearchPortions" class="big ui grey button" tabindex="0">
+                            <i class="search icon"></i>
+                            Buscar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <br /><br />
+                    <h2 id="plan_consumption_portion_description_p" hidden></h2>
+                    <h3 id="plan_consumption_portion_equivalences_p" hidden></h3>
+                    <h3 style="color: #FF0000;" id="plan_consumption_portion_extra_points_p" hidden></h3>
+                    <p id="plan_consumption_portion_amount_p"></p>
+                    <input type="hidden" id="plan_consumption_portion_id_portion_txt"
+                      name="plan_consumption_portion_id_portion_txt" />
+                  </div>
+
+                  <!-- PORCIONES CONSUMIDAS -->
+                  <div class="field">
+                    <!-- <label>Elige la cantidad consumida</label> -->
+                    <div class="ui big input">
+                      <select id="plan_consumption_portion_amount_sel" style="display: none;">
+                        <option value="">Seleccionar una cantidad</option>
+                        <option value="0.25">1/4</option>
+                        <option value="0.5">1/2</option>
+                        <option value="1">1</option>
+                        <option value="1.5">1 1/2</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <input type="hidden" id="plan_consumption_portion_amount_txt"
+                        name="plan_consumption_portion_amount_txt" />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- POR MENU -->
+            <div class="row" id="plan_consumption_menu_div" name="plan_consumption_div" style="display: none;">
+              <br />
+              <div class="sixteen wide column">
+
+                <form class="ui form" id="plan_consumption_menu_frm">
+                  <!-- ID PATIENT -->
+                  <input type="hidden" id="plan_consumption_menu_id_patient_txt"
+                    name="plan_consumption_menu_id_patient_txt" />
+
+                  <!-- ID PLAN -->
+                  <input type="hidden" id="plan_consumption_menu_id_plan_txt"
+                    name="plan_consumption_menu_id_plan_txt" />
+
+                  <!-- HORA DE COMER -->
+                  <input type="hidden" id="plan_consumption_menu_eat_time_txt"
+                    name="plan_consumption_menu_eat_time_txt" />
+
+                  <!-- FECHA -->
+                  <input type="hidden" id="plan_consumption_menu_date_txt" name="plan_consumption_menu_date_txt" />
+
+                  <!-- HORA -->
+                  <input type="hidden" id="plan_consumption_menu_time_txt" name="plan_consumption_menu_time_txt" />
+
+                  <!-- PORCION -->
+                  <div class="field">
+                    <label>Alimento</label>
+                    <button type="button" id="selectedFoodButton" class="ui teal big button" data-target="menu">
+                      <i class="food icon"></i>Seleccionar alimento
+                    </button>
+                    <br /><br />
+                    <h2 id="plan_consumption_menu_description_p"></h2>
+                    <h3 id="plan_consumption_menu_equivalences_p"></h3>
+                    <h3 style="color: #FF0000;" id="plan_consumption_menu_extra_points_p"></h3>
+                    <p id="plan_consumption_menu_amount_p"></p>
+                    <input type="hidden" id="plan_consumption_menu_id_portion_txt"
+                      name="plan_consumption_menu_id_portion_txt" />
+                  </div>
+
+                  <!-- PORCIONES CONSUMIDAS -->
+                  <div class="field">
+                    <label>Elige la cantidad consumida</label>
+                    <div class="ui big input">
+                      <select id="plan_consumption_menu_amount_sel">
+                        <option value="">Seleccionar una cantidad</option>
+                        <option value="0.25">1/4</option>
+                        <option value="0.5">1/2</option>
+                        <option value="1">1</option>
+                        <option value="1.5">1 1/2</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                      <input type="hidden" id="plan_consumption_menu_amount_txt"
+                        name="plan_consumption_menu_amount_txt" />
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <button type="button" id="buttonMenuSave" class="ui big teal fluid button"><i
+                        class="checkmark icon"></i>Guardar</button>
+                  </div>
+
+                  <div class="field">
+                    <button type="button" id="buttonMenuClean" class="ui big red fluid button"><i
+                        class="remove icon"></i>Cancelar</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CUADRO MODAL DE GRUPOS DE ALIMENTOS -->
+    <div class="ui modal" id="plan_consumption_categories_modal_div">
+      <i class="close icon"></i>
+      <div class="header">Grupos de Alimentos</div>
+      <div class="scrolling content" id="scrolling_categorias_alimentos">
+        <table class="ui celled table compact stackable responsive">
+          <thead>
+          </thead>
+          <tbody id="plan_consumption_categories_modal_tbody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CUADRO MODAL DE SUBGRUPOS DE ALIMENTOS -->
+    <div class="ui modal" id="plan_consumption_subcategories_modal_div">
+      <i class="close icon"></i>
+      <div class="header">Subgrupos de alimentos</div>
+      <div class="content">
+        <table class="ui unstackable table">
+          <colgroup>
+            <col width="95%" />
+            <col width="5%" />
+          </colgroup>
+          <tbody id="plan_consumption_subcategories_modal_tbody">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- CUADRO MODAL DE ALIMENTOS -->
+    <div class="ui modal correcciones" id="plan_consumption_portions_modal_div">
+      <i class="close icon"></i>
+      <div class="header">Alimentos</div>
+      <div id="plan_consumption_portions_modal_content">
+        <div class="ui segment custom-segment" id="scrolling_plan_de_alimentos">
+          <input type="text" id="input-field2" hidden>
+          <table id="tabla_plan_de_alimentos" class="ui celled table responsive nowrap">
+            <thead>
+            </thead>
+            <tbody id="plan_consumption_portions_modal_tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUADRO MODAL DE ALIMENTOS DE BUSQUEDA RAPIDA-->
+    <div class="ui modal correcciones" id="plan_consumption_portions_modal_div2">
+      <i class="close icon"></i>
+      <div class="header">Alimentos</div>
+      <div id="plan_consumption_portions_modal_content2">
+        <div class="ui segment custom-segment" id="scrolling_plan_de_alimentos">
+          <input type="text" id="input-field" hidden>
+          <table id="tabla_plan_de_alimentos2" class="ui celled table responsive nowrap">
+            <thead></thead>
+            <tbody id="plan_consumption_portions_modal_tbody2"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- CUADRO MODAL DE REGISTRO DE PORCION CONSUMIDA DEL MENU -->
+    <div class="ui modal" id="plan_consumption_menu_portion_modal_div">
+      <i class="close icon"></i>
+      <div class="header">Consumo del alimento</div>
+      <div class="content">
+        <h4>Comidas del día</h4>
+        <table class="ui unstackable table">
+          <tbody id="plan_consumption_menu_eat_time_tbody">
+            <tr data-eat-time="breakfast">
+              <td>Desayuno</td>
+            </tr>
+            <tr data-eat-time="snack_am">
+              <td>Merienda</td>
+            </tr>
+            <tr data-eat-time="dinner">
+              <td>Comida</td>
+            </tr>
+            <tr data-eat-time="snack_pm">
+              <td>Merienda</td>
+            </tr>
+            <tr data-eat-time="evening_meal">
+              <td>Cena</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+    <!-- CUADRO MODAL DE BUSQUEDA DE ALIMENTOS (INGRESO POR PORCIONES) -->
+    <div class="ui modal" id="search_portions_modal_div">
+      <i class="close icon"></i>
+      <div class="header">Buscar</div>
+      <div class="content">
+        <form class="ui form" id="search_portions_frm">
+          <div class="ui fluid search selection dropdown">
+            <input type="hidden" name="portion_description">
+            <i class="dropdown icon"></i>
+            <div class="default text">Selecciona una porción</div>
+            <div class="menu scroll-container"></div>
+            <input type="text" id="search_description_portion_txt" style="display: none;">
+          </div>
+          <!-- Agregado un espacio vertical -->
+          <div class="ui divider"></div>
+          <div class="field">
+            <button type="button" id="btnSearchPortionStart" class="ui teal button">
+              <i class="search icon"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- CUADRO MODAL DE MENSAJES -->
+    <div class="ui modal" id="message_div">
+      <i class="close icon"></i>
+      <div class="ui header" id="message_header_div"></div>
+      <div class="content">
+        <div class="description" id="message_description_div"></div>
+      </div>
+    </div>
+
+
+    <!-- CUADRO MODAL DE MENSAJES (VERDE) -->
+    <div class="ui modal" id="message_green_div">
+      <i class="close icon"></i>
+      <div class="ui header" id="message_green_header_div" style="color: #FFFFFF; background-color: #21BA45;"></div>
+      <div class="content" style="background-color: #21BA45;">
+        <div class="description" id="message_green_description_div" style="color: #FFFFFF;"></div>
+      </div>
+    </div>
+
+
+    <!-- CUADRO MODAL DE MENSAJES (ROJO) -->
+    <div class="ui modal" id="message_red_div">
+      <i class="close icon"></i>
+      <div class="ui header" id="message_red_header_div" style="color: #FFFFFF; background-color: #D01919;"></div>
+      <div class="content" style="background-color: #D01919;">
+        <div class="description" id="message_red_description_div" style="color: #FFFFFF;"></div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- CUADRO MODAL DE FRASES -->
+    <div class="ui modal" id="phrases_div" style="">
+      <i class="close icon"></i>
+      <div class="ui header" id="phrases_header_div" style="color: #61511B; background-color: #EAFED7;"></div>
+      <div class="content" style="background-color: #EAFED7;">
+        <div class="description" id="phrases_description_div" style="color: #907C38;"></div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- CUADRO MODAL DE CONFIRMACION DE CONSUMO QUE EXCEDERA LO ASIGNADO EN ALGUN GRUPO DE ALIMENTOS -->
+    <div class="ui modal" id="consumption_portion_modal_div">
+      <i class="close icon"></i>
+      <div class="content">
+        <div class="description" id="consumption_portion_modal_description_div"></div>
+      </div>
+      <div class="actions">
+        <button type="button" id="btnPortionSaveConfirm" class="ui teal button">Guardar</button>
+        <button type="button" id="btnPortionCancel" class="ui red button">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <!-- último div del pusher-->
+  <!-- CSS -->
+  <link rel="preload"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/css/perfect-scrollbar.min.css"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- SCRIPTS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+    integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"
+    integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- <script type="module" src="js/plan_consumption.js"></script> -->
+  <script>
+    $(document).on("click", "#plan_consumption_categories_modal_tbody tr", function () {
+      // Verificamos si ya se creó la instancia de PerfectScrollbar
+      if (!this.perfectScrollbarInitialized) {
+        var tbody = $("#plan_consumption_portions_modal_tbody");
+        new PerfectScrollbar("#scrolling_plan_de_alimentos");
+        this.perfectScrollbarInitialized = true; // Marcar como inicializado
+      }
+    });
+  </script>
+
+
+
+</body>
+
+</html>
