@@ -1,1 +1,28 @@
 <p>Soy un componente de conteo rápido</p>
+<!-- table_partial.html -->
+
+{% block content %}
+<table id="tabla_plan_de_alimentos" class="ui celled table inverted {{  data[0].color_class }} responsive nowrap">
+  <tbody id="plan_consumption_portions_modal_tbody">
+    {% for result in table.results[id] %}
+    <tr>
+      <td>
+        <div style="display: flex">
+          <div id="div1" style="flex: 2; font-weight: bold;">{{ result.description }} <br></div>
+          <div id="div2" style="flex: 1; font-weight: bold;">{{ result.amount}}</div>
+          <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points}}
+          </div>
+          <!--   <br> -->
+          <!--     {% if result.equivalences %} -->
+          <!--     {% for equivalence in result.equivalences %} -->
+          <!--   <i>{{ main_replace_decimals(equivalence.amount) }} {{ equivalence.name_category }}</i> -->
+          <!--   <br> -->
+          <!--     {% endfor %} -->
+          <!--     {% endif %} -->
+          <!-- </div> -->
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
