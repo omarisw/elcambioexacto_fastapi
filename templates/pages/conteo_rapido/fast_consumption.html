@@ -11,6 +11,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
     integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Incluye el script de htmx -->
+  <script src="https://unpkg.com/htmx.org@1.9.9"
+    integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+    crossorigin="anonymous"></script>
   <style>
     .custom-grid {
       display: flex;
@@ -79,26 +83,26 @@
               <label class="ui teal ribbon label">Mi conteo</label>
               <h5 style="color: #00B4AC;">Conteo Rápido Libre</h5>
               <div class="ui container custom-grid">
-                <a class="ui big teal label" hx-get="/portions_get_all/1" hx-trigger="click"
-                  hx-target="#tabla_colores">Lácteos</a>
-                <a class="ui big green label" hx-get="/portions_get_all/2" hx-trigger="click"
-                  hx-target="#tabla_colores">Verduras</a>
-                <a class="ui big red label" hx-get="/portions_get_all/3" hx-trigger="click"
-                  hx-target="#tabla_colores">Frutas</a>
-                <a class="ui big orange label" hx-get="/portions_get_all/4" hx-trigger="click"
+                <button class="ui big teal label" hx-get="/portions_get_all/1" hx-trigger="click"
+                  hx-target="#tabla_colores">Lácteos</button>
+                <button class="ui big green label" hx-get="/portions_get_all/2" hx-trigger="click"
+                  hx-target="#tabla_colores">Verduras</button>
+                <button class="ui big red label" hx-get="/portions_get_all/3" hx-trigger="click"
+                  hx-target="#tabla_colores">Frutas</button>
+                <button class="ui big orange label" hx-get="/portions_get_all/4" hx-trigger="click"
                   hx-target="#tabla_colores">Granos
-                  y Cereales</a>
-                <a class="ui big purple label" hx-get="/portions_get_all/5" hx-trigger="click"
-                  hx-target="#tabla_colores">Carnes</a>
-                <a class="ui big yellow label" hx-get="/portions_get_all/6" hx-trigger="click"
-                  hx-target="#tabla_colores">Grasas</a>
-                <a class="ui big brown label" hx-get="/portions_get_all/7" hx-trigger="click"
-                  hx-target="#tabla_colores">Libres</a>
-                <a class="ui big grey label" hx-get="/portions_get_all/8" hx-trigger="click"
-                  hx-target="#tabla_colores">Agua</a>
-                <a class="ui big black label" hx-get="/portions_get_all/9" hx-trigger="click"
+                  y Cereales</button>
+                <button class="ui big purple label" hx-get="/portions_get_all/5" hx-trigger="click"
+                  hx-target="#tabla_colores">Carnes</button>
+                <button class="ui big yellow label" hx-get="/portions_get_all/6" hx-trigger="click"
+                  hx-target="#tabla_colores">Grasas</button>
+                <button class="ui big brown label" hx-get="/portions_get_all/7" hx-trigger="click"
+                  hx-target="#tabla_colores">Libres</button>
+                <button class="ui big grey label" hx-get="/portions_get_all/8" hx-trigger="click"
+                  hx-target="#tabla_colores">Agua</button>
+                <button class="ui big black label" hx-get="/portions_get_all/9" hx-trigger="click"
                   hx-target="#tabla_colores">Puntos
-                  extras</a>
+                  extras</button>
               </div>
               <!-- MARCA DE SI SE HIZO, O NO, EJERCICIO -->
               <div class="row">
@@ -396,19 +400,19 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/css/perfect-scrollbar.min.css"
     as="style" onload="this.onload=null;this.rel='stylesheet'">
   <!-- SCRIPTS -->
-  <!-- Incluye el script de htmx -->
-  <script src="https://unpkg.com/htmx.org@1.9.9"
-    integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
-    crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
     integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"
     integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- <script type="module" src="js/plan_consumption.js"></script> -->
+  <!-- Contenido alternativo que se mostrará si JavaScript está deshabilitado -->
+  <noscript>
+    <p>Por favor, habilita JavaScript en tu navegador para ver el contenido completo de esta página.</p>
+  </noscript>
   <script>
     $(document).on("click", "#plan_consumption_categories_modal_tbody tr", function () {
       // Verificamos si ya se creó la instancia de PerfectScrollbar

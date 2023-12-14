@@ -3,7 +3,6 @@ from fastapi import FastAPI, Request, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel
 from decouple import config
 import mysql.connector
 import logging
@@ -30,10 +29,6 @@ db_config = {
     "password": db_password,
     "database": db_database,
 }
-
-
-class ValorModel(BaseModel):
-    valor: int
 
 
 app = FastAPI()
@@ -81,8 +76,6 @@ async def fast_consumption():
 @app.get("/portions_get_all/{category_id}")
 async def portionsGetAll(request: Request, category_id: int):
     connection = None
-    # import ipdb
-    # ipdb.set_trace()
     try:
         connection = mysql.connector.connect(**db_config)
 
@@ -147,5 +140,8 @@ async def portionsGetAll(request: Request, category_id: int):
 
     filtered_data = [
         item for item in categories_array if item['id'] == category_id]
-    print(filtered_data)
     return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "table": data_return, "id": category_id, "data": filtered_data})
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
