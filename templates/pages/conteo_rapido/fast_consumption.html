@@ -423,14 +423,14 @@
         this.perfectScrollbarInitialized = true; // Marcar como inicializado
       }
     });
-  </script>
-  <script>
     document.addEventListener('htmx:afterSwap', function (event) {
       var rows = event.target.querySelectorAll('.clickable-row');
       rows.forEach(function (row) {
         row.addEventListener('click', function () {
           var selectElement = row.querySelector('.plan_consumption_portion_amount_sel2');
+          var selectElement2 = row.querySelector('#bottonCircularLine');
           selectElement.style.display = '';  // Muestra el elemento
+          selectElement2.style.display = '';  // Muestra el elemento
         });
       });
     });
