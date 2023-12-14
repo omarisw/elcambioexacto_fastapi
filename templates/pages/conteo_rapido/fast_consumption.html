@@ -11,10 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
     integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Incluye el script de htmx -->
-  <script src="https://unpkg.com/htmx.org@1.9.9"
-    integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
-    crossorigin="anonymous"></script>
   <style>
     .custom-grid {
       display: flex;
@@ -405,6 +401,11 @@
     integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- Incluye el script de htmx -->
+  <script src="https://unpkg.com/htmx.org@1.9.9"
+    integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+    crossorigin="anonymous"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.10/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js"
     integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw=="
@@ -423,7 +424,17 @@
       }
     });
   </script>
-
+  <script>
+    document.addEventListener('htmx:afterSwap', function (event) {
+      var rows = event.target.querySelectorAll('.clickable-row');
+      rows.forEach(function (row) {
+        row.addEventListener('click', function () {
+          var selectElement = row.querySelector('.plan_consumption_portion_amount_sel2');
+          selectElement.style.display = '';  // Muestra el elemento
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

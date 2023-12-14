@@ -1,25 +1,37 @@
-<p>Soy un componente de conteo rápido</p>
 <!-- table_partial.html -->
 
 {% block content %}
 <table id="tabla_plan_de_alimentos" class="ui celled table inverted {{  data[0].color_class }} responsive nowrap">
   <tbody id="plan_consumption_portions_modal_tbody">
     {% for result in table.results[id] %}
-    <tr>
+    <tr id="row_{{ result.id }} "class="clickable-row">
       <td>
         <div style="display: flex">
           <div id="div1" style="flex: 2; font-weight: bold;">{{ result.description }} <br></div>
           <div id="div2" style="flex: 1; font-weight: bold;">{{ result.amount}}</div>
-          <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points}}
+          <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points }}
           </div>
-          <!--   <br> -->
-          <!--     {% if result.equivalences %} -->
-          <!--     {% for equivalence in result.equivalences %} -->
-          <!--   <i>{{ main_replace_decimals(equivalence.amount) }} {{ equivalence.name_category }}</i> -->
-          <!--   <br> -->
-          <!--     {% endfor %} -->
-          <!--     {% endif %} -->
-          <!-- </div> -->
+          <div style="flex: 0;">
+            <div class="ui input">
+              <select class="plan_consumption_portion_amount_sel2" style="display: none;" data-row-id="{{ result.id }}">
+                <option value="">Cant.</option>
+                <option value="0.25">1/4</option>
+                <option value="0.5">1/2</option>
+                <option value="1">1</option>
+                <option value="1.5">1 1/2</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="ui buttons" id="bottonCircularLine" style="display: none;">
+              <button class="circular ui icon button toggle-details" style="margin-left: 10px;">
+                <i class="chevron circle right icon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </td>
     </tr>
     {% endfor %}
