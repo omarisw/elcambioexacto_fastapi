@@ -102,181 +102,22 @@
               </div>
               <!-- MARCA DE SI SE HIZO, O NO, EJERCICIO -->
               <div class="row">
-                <br />
-                <div class="sixteen wide column">
-                  <form class="ui form" id="plan_consumption_exercise_frm">
-                    <!-- ID PATIENT -->
-                    <input type="hidden" id="plan_consumption_exercise_id_patient_txt"
-                      name="plan_consumption_exercise_id_patient_txt" />
-
-                    <!-- ID PLAN -->
-                    <input type="hidden" id="plan_consumption_exercise_id_plan_txt"
-                      name="plan_consumption_exercise_id_plan_txt" />
-
-                    <!-- FECHA -->
-                    <input type="hidden" id="plan_consumption_exercise_date_txt"
-                      name="plan_consumption_exercise_date_txt" />
-
-                </div>
-                <div class="field">
-                  <label>Hoy he hecho ejercicio</label>
-                  <div class="ui big input">
-                    <select id="plan_consumption_exercise_sel">
-                      <option value="0">No</option>
-                      <option value="1">Sí</option>
-                    </select>
-                    <input type="hidden" id="plan_consumption_exercise_txt" name="plan_consumption_exercise_txt" />
+                <form class="ui form" id="plan_consumption_exercise_frm">
+                  <div class="field">
+                    <label>Hoy he hecho ejercicio</label>
+                    <div class="ui big input">
+                      <select id="plan_consumption_exercise_sel">
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                      </select>
+                      <input type="hidden" id="plan_consumption_exercise_txt" name="plan_consumption_exercise_txt" />
+                    </div>
                   </div>
-                </div>
                 </form>
               </div>
               <!-- Renderización de tabla_plan_de_alimentos -->
               <div class="row">
                 <div id="tabla_colores"></div>
-              </div>
-            </div>
-
-            <!-- POR PORCIONES -->
-            <div class="row" id="plan_consumption_portions_div" name="plan_consumption_div" style="display: none;">
-              <br />
-              <div class="sixteen wide column">
-                <form class="ui form" id="plan_consumption_portions_frm">
-                  <!-- ID PATIENT -->
-                  <input type="hidden" id="plan_consumption_portion_id_patient_txt"
-                    name="plan_consumption_portion_id_patient_txt" />
-
-                  <!-- ID PLAN -->
-                  <input type="hidden" id="plan_consumption_portion_id_plan_txt"
-                    name="plan_consumption_portion_id_plan_txt" />
-
-                  <!-- FECHA -->
-                  <input type="hidden" id="plan_consumption_portion_date_txt"
-                    name="plan_consumption_portion_date_txt" />
-
-                  <!-- HORA -->
-                  <input type="hidden" id="plan_consumption_portion_time_txt"
-                    name="plan_consumption_portion_time_txt" />
-
-                  <!-- PORCION -->
-                  <div class="field">
-                    <label>Alimento</label>
-
-                    <div class="ui grid">
-                      <div class="row">
-                        <div class="eight wide column">
-                          <button type="button" id="buttonCategoriesAll" class="big ui teal button" tabindex="0"><i
-                              class="utensils icon"></i>Seleccionar</button>
-                        </div>
-                        <div class="eight wide column">
-                          <button type="button" id="buttonSearchPortions" class="big ui grey button" tabindex="0">
-                            <i class="search icon"></i>
-                            Buscar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <br /><br />
-                    <h2 id="plan_consumption_portion_description_p" hidden></h2>
-                    <h3 id="plan_consumption_portion_equivalences_p" hidden></h3>
-                    <h3 style="color: #FF0000;" id="plan_consumption_portion_extra_points_p" hidden></h3>
-                    <p id="plan_consumption_portion_amount_p"></p>
-                    <input type="hidden" id="plan_consumption_portion_id_portion_txt"
-                      name="plan_consumption_portion_id_portion_txt" />
-                  </div>
-
-                  <!-- PORCIONES CONSUMIDAS -->
-                  <div class="field">
-                    <!-- <label>Elige la cantidad consumida</label> -->
-                    <div class="ui big input">
-                      <select id="plan_consumption_portion_amount_sel" style="display: none;">
-                        <option value="">Seleccionar una cantidad</option>
-                        <option value="0.25">1/4</option>
-                        <option value="0.5">1/2</option>
-                        <option value="1">1</option>
-                        <option value="1.5">1 1/2</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                      <input type="hidden" id="plan_consumption_portion_amount_txt"
-                        name="plan_consumption_portion_amount_txt" />
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <!-- POR MENU -->
-            <div class="row" id="plan_consumption_menu_div" name="plan_consumption_div" style="display: none;">
-              <br />
-              <div class="sixteen wide column">
-
-                <form class="ui form" id="plan_consumption_menu_frm">
-                  <!-- ID PATIENT -->
-                  <input type="hidden" id="plan_consumption_menu_id_patient_txt"
-                    name="plan_consumption_menu_id_patient_txt" />
-
-                  <!-- ID PLAN -->
-                  <input type="hidden" id="plan_consumption_menu_id_plan_txt"
-                    name="plan_consumption_menu_id_plan_txt" />
-
-                  <!-- HORA DE COMER -->
-                  <input type="hidden" id="plan_consumption_menu_eat_time_txt"
-                    name="plan_consumption_menu_eat_time_txt" />
-
-                  <!-- FECHA -->
-                  <input type="hidden" id="plan_consumption_menu_date_txt" name="plan_consumption_menu_date_txt" />
-
-                  <!-- HORA -->
-                  <input type="hidden" id="plan_consumption_menu_time_txt" name="plan_consumption_menu_time_txt" />
-
-                  <!-- PORCION -->
-                  <div class="field">
-                    <label>Alimento</label>
-                    <button type="button" id="selectedFoodButton" class="ui teal big button" data-target="menu">
-                      <i class="food icon"></i>Seleccionar alimento
-                    </button>
-                    <br /><br />
-                    <h2 id="plan_consumption_menu_description_p"></h2>
-                    <h3 id="plan_consumption_menu_equivalences_p"></h3>
-                    <h3 style="color: #FF0000;" id="plan_consumption_menu_extra_points_p"></h3>
-                    <p id="plan_consumption_menu_amount_p"></p>
-                    <input type="hidden" id="plan_consumption_menu_id_portion_txt"
-                      name="plan_consumption_menu_id_portion_txt" />
-                  </div>
-
-                  <!-- PORCIONES CONSUMIDAS -->
-                  <div class="field">
-                    <label>Elige la cantidad consumida</label>
-                    <div class="ui big input">
-                      <select id="plan_consumption_menu_amount_sel">
-                        <option value="">Seleccionar una cantidad</option>
-                        <option value="0.25">1/4</option>
-                        <option value="0.5">1/2</option>
-                        <option value="1">1</option>
-                        <option value="1.5">1 1/2</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                      </select>
-                      <input type="hidden" id="plan_consumption_menu_amount_txt"
-                        name="plan_consumption_menu_amount_txt" />
-                    </div>
-                  </div>
-
-                  <div class="field">
-                    <button type="button" id="buttonMenuSave" class="ui big teal fluid button"><i
-                        class="checkmark icon"></i>Guardar</button>
-                  </div>
-
-                  <div class="field">
-                    <button type="button" id="buttonMenuClean" class="ui big red fluid button"><i
-                        class="remove icon"></i>Cancelar</button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
