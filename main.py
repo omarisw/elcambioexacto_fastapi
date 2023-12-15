@@ -1,4 +1,6 @@
+
 # Main Libraries
+import ipdb
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
@@ -6,33 +8,21 @@ from fastapi.templating import Jinja2Templates
 from fastapi.middleware.gzip import GZipMiddleware
 
 # Lib mysql configs
-from decouple import config
+# from decouple import config
 import mysql.connector
 import logging
 import json
 import aioredis
-
-# Obtén el entorno de desarrollo
-env = config('DEV', default='DEV')
-
-if env == 'DEV':
-    db_host = config('DB_DEV_HOST')
-    db_user = config('DB_DEV_USER')
-    db_password = config('DB_DEV_PASSWORD')
-    db_database = config('DB_DEV_DATABASE')
-if env == 'PROD':
-    db_host = config('DB_PROD_HOST')
-    db_user = config('DB_PROD_USER')
-    db_password = config('DB_PROD_PASSWORD')
-    db_database = config('DB_PROD_DATABASE')
+from config import get_settings
 
 
 # Configura tu conexión a la base de datos MySQL
+settings = get_settings()
 db_config = {
-    "host": db_host,
-    "user": db_user,
-    "password": db_password,
-    "database": db_database,
+    "host": settings.db_host,
+    "user": settings.db_user,
+    "password": settings.db_password,
+    "database": settings.db_database,
 }
 
 
@@ -173,7 +163,3 @@ async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Red
     filtered_data = [
         item for item in categories_array if item['id'] == category_id]
     return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "table": data_return['results'][category_id], "id": category_id, "data": filtered_data})
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
