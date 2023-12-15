@@ -1,34 +1,121 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu Proyecto con htmx, Jinja2, y Semantic UI</title>
-  <!-- Incluye los estilos de Semantic UI -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <meta name="description" content="Descripción de tu aplicación">
+  <link rel="icon" href="img/icon1_3_mini.ico" type="image/x-icon">
+  <!-- Barra de instalación de PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="img/icon1_3_mini.png">
+  <link rel="apple-touch-startup-image" href="img/icon1_3_mini.png">
+  <!-- <link rel="manifest" href="manifest.json"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+    integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
+  <title>Inicio de sesión</title>
 </head>
 
 <body>
-  <div class="ui container">
-    <h1 class="ui header">Mi Proyecto con htmx, Jinja2, y Semantic UI</h1>
-
-    <!-- Contenido dinámico -->
-    <div hx-get="/cargar_tabla" hx-trigger="load">
-      {{ tabla_html|safe }}
+  <!-- BARRA SUPERIOR -->
+  <header class="ui teal inverted menu" style="border-radius:0%;">
+    <div class="ui container">
+      <a class="header item">
+        <img src="img/icon1_3_mini.webp" width="35" height="39" alt="Logo">
+      </a>
     </div>
+  </header>
 
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="ui main container" id="main_container_div">
+    <div class="ui grid">
+      <div class="row">
+        <div class="sixteen wide mobile eight wide tablet column">
+          <div class="ui segment">
+            <h1 class="ui teal ribbon label">Iniciar sesión</h1>
+            <form class="ui form" method="post" accept-charset="utf-8" id="login_frm" name="login_frm">
+              <!-- NOMBRE DE USUARIO -->
+              <div class="field">
+                <label for="username_txt">Nombre de usuario</label>
+                <div class="ui huge icon input">
+                  <input type="text" id="username_txt" name="username_txt" placeholder="Nombre de usuario"
+                    autocomplete="username">
+                  <i class="user icon"></i>
+                </div>
+              </div>
+
+              <!-- CONTRASEÑA -->
+              <div class="field">
+                <label for="password_txt">Contraseña</label>
+                <div class="ui huge icon input">
+                  <input type="password" id="password_txt" name="password_txt" placeholder="Contraseña"
+                    autocomplete="current-password">
+                  <i class="key icon"></i>
+                </div>
+              </div>
+
+              <div class="field">
+                <button type="button" id="loginButton" class="ui fluid teal huge button"><i class="unlock icon"></i>
+                  Acceder</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CUADRO MODAL DE MENSAJES -->
+  <div class="ui modal" id="message_div">
+    <i class="close icon"></i>
+    <div class="ui header" id="message_header_div"></div>
+    <div class="content">
+      <div class="description" id="message_description_div"></div>
+    </div>
   </div>
 
+  <!-- Banner de instalación en el footer -->
+  <footer style="display:none;">
+    <div class="ui container">
+      <div class="ui grid">
+        <div class="row">
+          <div class="sixteen wide mobile eight wide tablet column">
+            <div id="install-banner" class="ui teal inverted segment"
+              style="color: white; text-align: center; padding: 10px;">
+              <p>¡Instala nuestra aplicación para acceder más rápido!</p>
+              <button
+                style="background-color: white; color: #008080; border: none; padding: 10px 20px; cursor: pointer;">Instalar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    // Verifica si la PWA está instalada
+    if (!navigator.serviceWorker.controller && !(navigator.userAgent.match(/(iPhone|iPod|iPad)/i))) {
+      const footer = document.querySelector('footer');
+      footer.style.display = 'block';
+    }
+  </script>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js"
+    integrity="sha512-5NqgLBAYtvRsyAzAvEBWhaW+NoB+vARl6QiA02AFMhCWvPpi7RWResDcTGYvQtzsHVCfiUhwvsijP+3ixUk1xw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+    integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Incluye el script de htmx -->
   <script src="https://unpkg.com/htmx.org@1.9.9"
     integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
     crossorigin="anonymous"></script>
-  <!-- Incluye el script de Semantic UI -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <!-- Incluye el script de jQuery (opcional, necesario para algunas funciones de Semantic UI) -->
-  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script type="module" src="js/index.js"></script>
+  <!-- SERVICE WORKER -->
+
 </body>
 
 </html>

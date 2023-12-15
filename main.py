@@ -2,6 +2,7 @@
 # Main Libraries
 import ipdb
 from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -15,6 +16,8 @@ import json
 import aioredis
 from config import get_settings
 
+# utils
+from utils import build_template_path
 
 # Configura tu conexión a la base de datos MySQL
 settings = get_settings()
@@ -33,6 +36,12 @@ app.add_middleware(GZipMiddleware, minimum_size=15400)
 
 REDIS_URL = "redis://localhost:6379/0"
 
+# Mount the "static" folder to serve static files.
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/img", StaticFiles(directory="static/img"), name="static")
+app.mount("/css", StaticFiles(directory="static/css"), name="static")
+app.mount("/js", StaticFiles(directory="static/js"), name="static")
+
 
 async def get_redis():
     redis = await aioredis.create_redis_pool(REDIS_URL)
@@ -48,9 +57,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-conteo_rapido = "pages/conteo_rapido/"
-# Configuración de Jinja2
-# Asegúrate de tener un directorio 'templates' en tu proyecto
+
+PAGES = "pages/"
 templates = Jinja2Templates(directory="templates")
 
 
@@ -81,6 +89,7 @@ async def fast_consumption():
 
 @app.post("/portion_save/{id}")
 async def portion_save(id: int):
+    print(id)
     message = "Guardado con exito"
     if 1 == 1:
         message = "Error al guardar"
@@ -90,6 +99,7 @@ async def portion_save(id: int):
 # Codigo para obtener las categorias
 @app.get("/portions_get_all/{category_id}")
 async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Redis = Depends(get_redis)):
+    template_path = build_template_path("conteo_rapido", "table_partial.html")
     connection = None
     try:
         # Obtener datos de redis
@@ -100,7 +110,13 @@ async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Red
             cached_data_dict = json.loads(cached_data_str)
             filtered_data = [
                 item for item in categories_array if item['id'] == category_id]
-            return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "id": category_id, "table": cached_data_dict['results'][f"{category_id}"], "data": filtered_data})
+            return templates.TemplateResponse(template_path,
+                                              {
+                                                  "request": request,
+                                                  "id": category_id,
+                                                  "table": cached_data_dict['results'][f"{category_id}"],
+                                                  "data": filtered_data
+                                              })
         connection = mysql.connector.connect(**db_config)
 
         with connection.cursor() as cursor:
@@ -170,4 +186,4 @@ async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Red
 
     filtered_data = [
         item for item in categories_array if item['id'] == category_id]
-    return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "table": data_return['results'][category_id], "id": category_id, "data": filtered_data})
+    return templates.TemplateResponse(template_path, {"request": request, "table": data_return['results'][category_id], "id": category_id, "data": filtered_data})
