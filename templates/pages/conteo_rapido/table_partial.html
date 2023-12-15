@@ -3,7 +3,7 @@
 {% block content %}
 <table id="tabla_plan_de_alimentos" class="ui celled table inverted {{  data[0].color_class }} responsive nowrap">
   <tbody id="plan_consumption_portions_modal_tbody">
-    {% for result in table.results[id] %}
+    {% for result in table %}
     <tr id="row_{{ result.id }} "class="clickable-row">
       <td>
         <div style="display: flex">

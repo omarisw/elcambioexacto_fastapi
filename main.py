@@ -1,11 +1,16 @@
-
-from fastapi import FastAPI, Request, HTTPException
+# Main Libraries
+from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.gzip import GZipMiddleware
+
+# Lib mysql configs
 from decouple import config
 import mysql.connector
 import logging
+import json
+import aioredis
 
 # Obtén el entorno de desarrollo
 env = config('DEV', default='DEV')
@@ -32,6 +37,18 @@ db_config = {
 
 
 app = FastAPI()
+
+# Habilitar la compresión de contenido
+app.add_middleware(GZipMiddleware, minimum_size=15400)
+
+REDIS_URL = "redis://localhost:6379/0"
+
+
+async def get_redis():
+    redis = await aioredis.create_redis_pool(REDIS_URL)
+    yield redis
+    redis.close()
+    await redis.wait_closed()
 
 # Configuración CORS para permitir solicitudes desde cualquier origen
 app.add_middleware(
@@ -74,9 +91,18 @@ async def fast_consumption():
 
 # Codigo para obtener las categorias
 @app.get("/portions_get_all/{category_id}")
-async def portionsGetAll(request: Request, category_id: int):
+async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Redis = Depends(get_redis)):
     connection = None
     try:
+        # Obtener datos de redis
+        cached_data = await redis.get(f"portions:{category_id}")
+        if cached_data:
+            # Decodificar los bytes y cargar en formato JSON
+            cached_data_str = cached_data.decode("utf-8")
+            cached_data_dict = json.loads(cached_data_str)
+            filtered_data = [
+                item for item in categories_array if item['id'] == category_id]
+            return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "id": category_id, "table": cached_data_dict['results'][f"{category_id}"], "data": filtered_data})
         connection = mysql.connector.connect(**db_config)
 
         with connection.cursor() as cursor:
@@ -123,6 +149,12 @@ async def portionsGetAll(request: Request, category_id: int):
                     if portion_data["id"] not in [p["id"] for p in data_return["results"][category_id]]:
                         data_return["results"][category_id].append(
                             portion_data)
+
+                # Transforma tus datos en formato JSON
+                data_return_json = json.dumps(data_return)
+
+                # Almacena los datos en Redis con un tiempo de vida (TTL)
+                await redis.setex(f"portions:{category_id}", 3600, data_return_json)
             else:
                 raise HTTPException(
                     status_code=404, detail="No se encontraron alimentos para el grupo y subgrupo de alimentos seleccionados.")
@@ -140,7 +172,7 @@ async def portionsGetAll(request: Request, category_id: int):
 
     filtered_data = [
         item for item in categories_array if item['id'] == category_id]
-    return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "table": data_return, "id": category_id, "data": filtered_data})
+    return templates.TemplateResponse(conteo_rapido + "table_partial.html", {"request": request, "table": data_return['results'][category_id], "id": category_id, "data": filtered_data})
 
 if __name__ == "__main__":
     import uvicorn
