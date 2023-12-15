@@ -79,6 +79,14 @@ async def fast_consumption():
     return FileResponse("templates/pages/conteo_rapido/fast_consumption.html")
 
 
+@app.post("/portion_save/{id}")
+async def portion_save(id: int):
+    message = "Guardado con exito"
+    if 1 == 1:
+        message = "Error al guardar"
+    return {"message": message}
+
+
 # Codigo para obtener las categorias
 @app.get("/portions_get_all/{category_id}")
 async def portionsGetAll(request: Request, category_id: int, redis: aioredis.Redis = Depends(get_redis)):

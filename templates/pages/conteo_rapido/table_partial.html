@@ -7,10 +7,9 @@
     <tr id="row_{{ result.id }} "class="clickable-row">
       <td>
         <div style="display: flex">
-          <div id="div1" style="flex: 2; font-weight: bold;">{{ result.description }} <br></div>
+          <div id="div1" style="flex: 2; font-weight: bold;">{{ result.description }}</div>
           <div id="div2" style="flex: 1; font-weight: bold;">{{ result.amount}}</div>
-          <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points }}
-          </div>
+          <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points }} </div>
           <div style="flex: 0;">
             <div class="ui input">
               <select class="plan_consumption_portion_amount_sel2" style="display: none;" data-row-id="{{ result.id }}">
@@ -26,7 +25,7 @@
               </select>
             </div>
             <div class="ui buttons" id="bottonCircularLine" style="display: none;">
-              <button class="circular ui icon button toggle-details" style="margin-left: 10px;">
+              <button class="circular ui icon button toggle-details" hx-post="/portion_save/{{ result.id }}" hx-swap="none">
                 <i class="chevron circle right icon"></i>
               </button>
             </div>
