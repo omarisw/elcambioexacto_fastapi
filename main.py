@@ -1,13 +1,12 @@
 
 # Main Libraries
 import ipdb
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import FastAPI, Request, HTTPException, Depends, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.gzip import GZipMiddleware
-
 # Lib mysql configs
 # from decouple import config
 import mysql.connector
@@ -88,11 +87,12 @@ async def fast_consumption():
 
 
 @app.post("/portion_save/{id}")
-async def portion_save(id: int):
-    print(id)
-    message = "Guardado con exito"
-    if 1 == 1:
-        message = "Error al guardar"
+async def portion_save(id: int, portion=Form(...)):
+    # Pasamos el JSON de texto y lo cargamos con loads para convertirlo en diccionario
+    portion_data = json.loads(portion)
+    message = "error"
+    if portion_data:
+        message = "Porcion guardada"
     return {"message": message}
 
 

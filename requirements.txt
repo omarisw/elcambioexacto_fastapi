@@ -6,3 +6,4 @@ mysql-connector-python
 pydantic
 pydantic-settings
 jinja2
+python-multipart

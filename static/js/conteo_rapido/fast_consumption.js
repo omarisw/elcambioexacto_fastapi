@@ -1,13 +1,35 @@
-$(document).on("click", "#plan_consumption_categories_modal_tbody tr", function() {
-  // Verificamos si ya se creó la instancia de PerfectScrollbar
-  if (!this.perfectScrollbarInitialized) {
-    console.log("Pudimos entrar usando perfectscrollbar")
-    var tbody = $("#plan_consumption_portions_modal_tbody");
-    new PerfectScrollbar("#scrolling_plan_de_alimentos");
-    this.perfectScrollbarInitialized = true; // Marcar como inicializado
-  }
-});
+import { sessionData, sessionDataStr, main_verify_session, main_logout } from "../global.js";
 
+let idPlan;
+let idPatient;
+
+const app = {
+  initialize() {
+    this.bindEvents();
+  },
+  bindEvents() {
+    document.addEventListener('DOMContentLoaded', this.onDeviceReady);
+  },
+  onDeviceReady() {
+    document.addEventListener('backbutton', () => {
+      main_back_key_down();
+    });
+
+
+    const check = main_verify_session();
+
+    if (check === true) {
+      // Asignamos los IDS
+      idPlan = sessionData.id_plan;
+      idPatient = sessionData.id;
+    } else {
+      main_logout();
+      window.location.assign('/');
+    }
+  }
+};
+
+app.initialize();
 document.addEventListener('htmx:afterSwap', function(event) {
   var rows = event.detail.elt.querySelectorAll('.clickable-row');
   rows.forEach(function(row) {

@@ -25,7 +25,11 @@
               </select>
             </div>
             <div class="ui buttons" id="bottonCircularLine" style="display: none;">
-              <button class="circular ui icon button toggle-details" hx-post="/portion_save/{{ result.id }}" hx-swap="none">
+                <button class="circular ui icon button toggle-details"
+                  hx-post="/portion_save/{{ result.id }}"
+                  hx-swap="none"
+                  hx-vals='js:{portion: getData()}'
+                  id="portion_{{ result.id }}" >
                 <i class="chevron circle right icon"></i>
               </button>
             </div>
