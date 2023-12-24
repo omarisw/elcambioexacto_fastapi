@@ -260,8 +260,14 @@
     crossorigin="anonymous"></script>
   <script>
     const sessionDataStr = window.localStorage.getItem('patient_data');
-    function getData() {
-      return sessionDataStr;
+    function getData(id) {
+      // Datos que necesitamos el valor del select
+      // El valor del idPlan
+      // El valor del idUser
+      // Ide de la porción
+      const select = document.querySelector(`.plan_consumption_portion_amount_sel[data-row-select="${id}"]`);
+      if (select != null && select != '')
+        return sessionDataStr;
     }
   </script>
   <script type="module" src="js/conteo_rapido/fast_consumption.js"></script>

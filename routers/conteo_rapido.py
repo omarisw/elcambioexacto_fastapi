@@ -1,3 +1,4 @@
+import ipdb
 from fastapi import APIRouter, Request, HTTPException, Depends, Form
 from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
@@ -24,6 +25,7 @@ settings = get_settings()
 db_config = {
     "host": settings.db_host,
     "user": settings.db_user,
+    "port": settings.db_port,
     "password": settings.db_password,
     "database": settings.db_database,
 }
@@ -51,11 +53,12 @@ async def fast_consumption():
 @router.post("/portion_save/{id}")
 async def portion_save(id: int, portion=Form(...)):
     # Pasamos el JSON de texto y lo cargamos con loads para convertirlo en diccionario
+    # ipdb.set_trace()
     portion_data = json.loads(portion)
     message = "error"
     if portion_data:
         message = "Porcion guardada"
-    return {"message": message}
+    return {"title": "Porcion guardada", "message": message}
 
 
 # Codigo para obtener las categorias

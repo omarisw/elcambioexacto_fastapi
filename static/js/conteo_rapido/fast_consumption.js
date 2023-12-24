@@ -34,14 +34,14 @@ document.addEventListener('htmx:afterSwap', function(event) {
   var rows = event.detail.elt.querySelectorAll('.clickable-row');
   rows.forEach(function(row) {
     row.addEventListener('click', function() {
-      var selectElement = row.querySelector('.plan_consumption_portion_amount_sel2');
+      var selectElement = row.querySelector('.plan_consumption_portion_amount_sel');
       var selectElement2 = row.querySelector('#bottonCircularLine');
       selectElement.style.display = '';  // Muestra el elemento
       selectElement2.style.display = '';  // Muestra el elemento
     });
   });
 });
-document.addEventListener('htmx:afterRequest', function(event) {
+document.addEventListener('htmx:afterSwap', function(event) {
   // Verifica si la respuesta contiene un mensaje
   const response = event.detail.xhr.response
   const responseURL = event.detail.xhr.responseURL
@@ -49,7 +49,9 @@ document.addEventListener('htmx:afterRequest', function(event) {
   if (responseURL && responseURL.includes('portion_save')) {
     // Convertimos a JSON
     const msg = JSON.parse(response)
+    main_show_message_green(msg['title'], msg['message'])
     // Muestra la alerta SweetAlert con el mensaje
+    alert(msg['message'])
     Swal.fire({
       icon: 'success',
       title: 'Éxito',

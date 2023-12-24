@@ -12,7 +12,7 @@
           <div id="div3" style="flex: 0; font-weight: bold; margin-right: 2em; color:red;">{{ result.extra_points }} </div>
           <div style="flex: 0;">
             <div class="ui input">
-              <select class="plan_consumption_portion_amount_sel2" style="display: none;" data-row-id="{{ result.id }}">
+              <select class="plan_consumption_portion_amount_sel" style="display: none;" data-row-select="{{ result.id }}">
                 <option value="">Cant.</option>
                 <option value="0.25">1/4</option>
                 <option value="0.5">1/2</option>
@@ -28,7 +28,7 @@
                 <button class="circular ui icon button toggle-details"
                   hx-post="/portion_save/{{ result.id }}"
                   hx-swap="none"
-                  hx-vals='js:{portion: getData()}'
+                  hx-vals='js:{portion: getData({{ result.id }})}'
                   id="portion_{{ result.id }}" >
                 <i class="chevron circle right icon"></i>
               </button>
