@@ -19,6 +19,7 @@ settings = get_settings()
 db_config = {
     "host": settings.db_host,
     "user": settings.db_user,
+    "port": settings.db_port,
     "password": settings.db_password,
     "database": settings.db_database,
 }
