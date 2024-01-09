@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="apple-touch-icon" href="img/icon1_3_mini.png">
   <link rel="apple-touch-startup-image" href="img/icon1_3_mini.png">
-  <!-- <link rel="manifest" href="manifest.json"> -->
+  <link rel="manifest" href="static/manifest.json">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
     integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'">
@@ -94,27 +94,33 @@
     </div>
   </footer>
   <script>
-    // Verifica si la PWA está instalada
-    if (!navigator.serviceWorker.controller && !(navigator.userAgent.match(/(iPhone|iPod|iPad)/i))) {
-      const footer = document.querySelector('footer');
-      footer.style.display = 'block';
+    <!-- SERVICE WORKER -->
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registrado con éxito:', registration);
+        })
+        .catch(error => {
+          console.error('Error al registrar el Service Worker:', error);
+        });
     }
+    // Verifica si la PWA está instalada
+    // if (!navigator.serviceWorker.controller && !(navigator.userAgent.match(/(iPhone|iPod|iPad)/i))) {
+    //   const footer = document.querySelector('footer');
+    //   footer.style.display = 'block';
+    // }
   </script>
 
   <!-- SCRIPTS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.slim.min.js"
-    integrity="sha512-5NqgLBAYtvRsyAzAvEBWhaW+NoB+vARl6QiA02AFMhCWvPpi7RWResDcTGYvQtzsHVCfiUhwvsijP+3ixUk1xw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
-    integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/plugins/jquery.min.js"></script>
+  </script>
+  <script src="js/plugins/semantic.min.js"></script>
+  <script src="js/plugins/sweetalert2.min.js"></script>
   <!-- Incluye el script de htmx -->
   <script src="https://unpkg.com/htmx.org@1.9.9"
     integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
     crossorigin="anonymous"></script>
   <script type="module" src="js/index.js"></script>
-  <!-- SERVICE WORKER -->
 
 </body>
 

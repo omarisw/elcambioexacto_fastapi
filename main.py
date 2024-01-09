@@ -1,8 +1,10 @@
 
 # Main Libraries
 import ipdb
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -33,11 +35,16 @@ app.add_middleware(GZipMiddleware, minimum_size=15400)
 # Mount the "static" folder to serve static files.
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.mount("/img", StaticFiles(directory="static/img"), name="static")
+app.mount("/icons", StaticFiles(directory="static/img/icons"), name="static")
 app.mount("/css", StaticFiles(directory="static/css"), name="static")
 app.mount("/js", StaticFiles(directory="static/js"), name="static")
 
+# Configurar la ruta para servir el archivo manifest.json
+app.mount("/manifest.json", FileResponse(Path("manifest.json")), name="manifest")
+
 # Rutas
-# Ruta de Pagina Conteo Rápido
+
+# Pagina Conteo Rápido
 app.include_router(conteo_rapido.router)
 
 
@@ -54,3 +61,12 @@ app.add_middleware(
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/service-worker.js")
+async def service_worker():
+    """
+        Así debe ser la configuración del mapeo para 
+        no tener problemas con la instalacion del PWA
+    """
+    return FileResponse("static/js/service-worker.js")
