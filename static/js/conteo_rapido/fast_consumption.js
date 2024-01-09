@@ -1,4 +1,4 @@
-import { sessionData, sessionDataStr, main_verify_session, main_logout } from "../global.js";
+import { sessionData, main_verify_session, main_logout } from "../global.js";
 
 let idPlan;
 let idPatient;

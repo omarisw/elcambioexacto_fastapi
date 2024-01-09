@@ -51,7 +51,9 @@
     </a>
 
     <br />
-    <a class="item" href="/start"><i class="home icon"></i> Inicio</a>
+
+    <!-- <button hx-post="/clicked" hx-target="#result-container" hx-swap="innerHTML"> -->
+    <a id="startButton" class="item" hx-get="/start" hx-target="#the_segment"><i class="home icon"></i> Inicio</a>
     <a class="item" href="/plan_consumption"><i class="utensils icon"></i>Mi conteo</a>
     <a class="item" href="/plan_previous_days"><i class="th list icon"></i> Mis logros</a>
     <a class="item" href="/plan_consumed_log"><i class="book icon"></i> Bitácora de comida</a>
@@ -76,7 +78,7 @@
       <div class="ui grid">
         <div class="row">
           <div class="sixteen wide column">
-            <div class="ui segment" style="margin-top: 10vh">
+            <div class="ui segment" style="margin-top: 10vh" id="the_segment">
               <label class="ui teal ribbon label">Mi conteo</label>
               <h5 style="color: #00B4AC;">Conteo Rápido Libre</h5>
               <div class="ui container custom-grid">
@@ -261,16 +263,14 @@
   <script>
     const sessionDataStr = window.localStorage.getItem('patient_data');
     function getData(id) {
-      // Datos que necesitamos el valor del select
-      // El valor del idPlan
-      // El valor del idUser
-      // Ide de la porción
       const select = document.querySelector(`.plan_consumption_portion_amount_sel[data-row-select="${id}"]`);
       if (select != null && select != '')
         return sessionDataStr;
     }
+
   </script>
   <script type="module" src="js/conteo_rapido/fast_consumption.js"></script>
+  <script type="module" src="js/start/start.js"></script>
 
 </body>
 

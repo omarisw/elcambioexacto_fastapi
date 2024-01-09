@@ -12,7 +12,7 @@ from fastapi.middleware.gzip import GZipMiddleware
 from config import get_settings
 
 # Rutas
-from routers import conteo_rapido
+from routers import conteo_rapido, start_page
 
 templates = Jinja2Templates(directory="templates")
 
@@ -43,7 +43,8 @@ app.mount("/js", StaticFiles(directory="static/js"), name="static")
 app.mount("/manifest.json", FileResponse(Path("manifest.json")), name="manifest")
 
 # Rutas
-
+# Pagina start Page
+app.include_router(start_page.router)
 # Pagina Conteo Rápido
 app.include_router(conteo_rapido.router)
 
